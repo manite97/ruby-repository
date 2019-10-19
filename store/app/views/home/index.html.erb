@@ -1,0 +1,55 @@
+
+
+<div>
+  <h1>Welcome to Store </h1>
+
+</div>
+<p id='notice'><%= notice %></p>
+<% if current_user %>
+  <div class="wrapper">
+     Logged in as <%= current_user.email %>.
+     <div class="log-out">
+      <%= link_to 'Log Out', logout_path, class: "btn stretched-link" %>
+     </div>
+ </div>
+  <div>
+  	<h3> Here are you Order's </h3>
+  </div>
+  <div>
+  <div>
+    <%= link_to 'Create New order', new_user_order_path(current_user.id), class: "btn btn-primary" %>
+  </div>
+ </div>
+ <br/>
+ <br/>
+ <table class = "table table-bordered table-striped">
+   <thead>
+      <tr>
+         <th>Order ID</th>
+         <th>Created At</th>
+         <th></th>
+         <th></th>
+      </tr>
+   </thead>
+   
+   <tbody>
+      <% current_user.orders.each do |order| %>
+         
+         <tr>
+            <td><%= order.id %></td>
+            <td><%= order.created_at %></td>
+            <td><%= button_to "View Order", user_order_path(current_user.id,order.id), method: :get, class: "btn btn-success" %></td>
+            <td><%= button_to "Delete",  user_order_path(current_user.id,order.id), method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{order.id}?" %></td>
+         </tr>
+         
+      <% end %>
+   </tbody>
+   
+</table>
+<% else %>
+
+
+  <%= link_to 'Sign Up', signup_path %> or 
+  <%= link_to 'Log In', login_path %>
+<% end %>
+</div>
